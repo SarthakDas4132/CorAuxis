@@ -15,16 +15,17 @@
   user-select: none;
 }
 
-/* Full-bleed edge-to-edge background with extra height for smooth parallax scroll */
+/* Full-bleed edge-to-edge background — natural zoomed-out framing */
 .liquid-hero__bg-container {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
+  bottom: 0;
   width: 100vw;
-  height: 135vh;
+  height: 100vh;
   z-index: -2;
-  overflow: hidden;
+  overflow: visible;
   pointer-events: none;
 }
 
@@ -32,10 +33,10 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center center;
   display: block;
   will-change: transform;
-  transition: transform 0.08s linear;
+  transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .liquid-hero__plus {
