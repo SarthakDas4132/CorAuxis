@@ -151,16 +151,37 @@ export default function LiquidHero({
   withinText = "within 24 hours.",
   title = "COR-AUXIS",
 }: LiquidHeroProps) {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrollY(window.scrollY);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <section className="liquid-hero">
       {/* 
-        Background Image (WebGL liquid canvas is commented below)
+        Parallax Background Image (moves up on scroll down, vice versa)
       */}
       <div className="liquid-hero__bg-container">
         <img
           src={image}
           alt="Hero Background"
           className="liquid-hero__bg-img"
+          style={{
+            transform: `translate3d(0, -${scrollY * 0.36}px, 0)`,
+          }}
         />
       </div>
 

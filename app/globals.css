@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "BDO Grotesk Variable";
+  src: url("https://framerusercontent.com/assets/FcybOZJ2ipUdK2dQmwN3gFVAvuk.woff2") format("woff2");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 100 1000;
+}
+
 :root {
   --background: #000000;
   --foreground: #ffffff;
