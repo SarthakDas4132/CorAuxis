@@ -1,0 +1,254 @@
+"use client";
+
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import * as THREE from "three";
+import { useMemo, useRef, useState, useEffect, Suspense } from "react";
+import "./LiquidHero.css";
+
+// Clip-space vertex shader guarantees 100% full screen coverage edge-to-edge
+const vertexShader = /* glsl */ `
+  varying vec2 vUv;
+  void main() {
+    vUv = uv;
+    gl_Position = vec4(position.xy, 0.0, 1.0);
+  }
+`;
+
+const fragmentShader = /* glsl */ `
+  uniform sampler2D uTexture;
+  uniform vec2 uMouse;
+  uniform float uTime;
+  uniform float uCursorSize;
+  uniform float uPower;
+  uniform float uDistortion;
+  uniform float uImageAspect;
+  uniform float uCanvasAspect;
+  varying vec2 vUv;
+
+  // True object-fit: cover GLSL mapping with overscan to prevent edge black borders
+  vec2 coverUv(vec2 uv, float imageAspect, float canvasAspect) {
+    vec2 st = uv;
+    float overscan = 1.08; // 8% overscan buffer prevents ripple distortion from pulling in black edges
+    vec2 s = vec2(1.0);
+
+    if (canvasAspect > imageAspect) {
+      s = vec2(1.0, imageAspect / canvasAspect);
+    } else {
+      s = vec2(canvasAspect / imageAspect, 1.0);
+    }
+
+    return (st - 0.5) * s * (1.0 / overscan) + 0.5;
+  }
+
+  void main() {
+    vec2 uv = coverUv(vUv, uImageAspect, uCanvasAspect);
+    float distanceFromMouse = distance(vUv, uMouse);
+    float radius = uCursorSize;
+    float influence = smoothstep(radius, 0.0, distanceFromMouse);
+    vec2 direction = normalize(vUv - uMouse + 0.0001);
+    float ripple =
+      sin(distanceFromMouse * 42.0 - uTime * 4.0) *
+      influence *
+      uDistortion;
+    vec2 distortion = direction * ripple * 0.035 * uPower;
+    
+    // Clamp distorted UVs inside [0.001, 0.999] so edge distortion never samples black borders
+    vec2 distortedUv = clamp(uv + distortion, 0.001, 0.999);
+    vec4 image = texture2D(uTexture, distortedUv);
+    gl_FragColor = vec4(image.rgb, 1.0);
+  }
+`;
+
+interface LiquidImageProps {
+  image: string;
+  cursorSize?: number;
+  power?: number;
+  distortion?: number;
+  globalPointerRef: React.MutableRefObject<THREE.Vector2>;
+}
+
+function LiquidImage({
+  image,
+  cursorSize = 0.5,
+  power = 1,
+  distortion = 0.8,
+  globalPointerRef,
+}: LiquidImageProps) {
+  const texture = useLoader(THREE.TextureLoader, image);
+  const materialRef = useRef<THREE.ShaderMaterial>(null);
+  const localPointer = useRef(new THREE.Vector2(0.5, 0.5));
+
+  const uniforms = useMemo(() => {
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.wrapS = THREE.ClampToEdgeWrapping;
+    texture.wrapT = THREE.ClampToEdgeWrapping;
+    return {
+      uTexture: { value: texture },
+      uMouse: { value: new THREE.Vector2(0.5, 0.5) },
+      uTime: { value: 0 },
+      uCursorSize: { value: cursorSize },
+      uPower: { value: power },
+      uDistortion: { value: distortion },
+      uImageAspect: { value: 16 / 9 },
+      uCanvasAspect: { value: 1 },
+    };
+  }, [texture, cursorSize, power, distortion]);
+
+  useFrame(({ clock, size }) => {
+    if (!materialRef.current) return;
+    const shader = materialRef.current;
+
+    // Calculate actual texture aspect ratio dynamically
+    const img = texture.image;
+    const imgAspect = img && img.width && img.height ? img.width / img.height : 16 / 9;
+    const canvasAspect = size.width / size.height;
+
+    shader.uniforms.uTime.value = clock.getElapsedTime();
+    shader.uniforms.uCanvasAspect.value = canvasAspect;
+    shader.uniforms.uImageAspect.value = imgAspect;
+
+    // Smoothly lerp mouse uniform
+    const targetPointer = globalPointerRef.current || localPointer.current;
+    shader.uniforms.uMouse.value.lerp(targetPointer, 0.12);
+  });
+
+  return (
+    <mesh
+      onPointerMove={(event) => {
+        if (!event.uv) return;
+        localPointer.current.set(event.uv.x, event.uv.y);
+        globalPointerRef.current.set(event.uv.x, event.uv.y);
+      }}
+    >
+      <planeGeometry args={[2, 2]} />
+      <shaderMaterial
+        ref={materialRef}
+        vertexShader={vertexShader}
+        fragmentShader={fragmentShader}
+        uniforms={uniforms}
+        toneMapped={false}
+      />
+    </mesh>
+  );
+}
+
+interface LiquidHeroProps {
+  image?: string;
+  eyebrow?: string;
+  title?: string;
+  withinText?: string;
+  cursorSize?: number;
+  power?: number;
+  distortion?: number;
+}
+
+export default function LiquidHero({
+  image = "/images/bg.png",
+  eyebrow = "AI AUTOMATION • SOFTWARE DEVELOPMENT • DIGITAL TRANSFORMATION",
+  withinText = "within 24 hours.",
+  title = "COR-AUXIS",
+  cursorSize = 0.5,
+  power = 1,
+  distortion = 0.8,
+}: LiquidHeroProps) {
+  const [mounted, setMounted] = useState(false);
+  const globalPointerRef = useRef(new THREE.Vector2(0.5, 0.5));
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const handleGlobalMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = 1.0 - (e.clientY - rect.top) / rect.height; // Invert Y for WebGL UV space
+    globalPointerRef.current.set(x, y);
+  };
+
+  return (
+    <section className="liquid-hero" onMouseMove={handleGlobalMouseMove}>
+      {/* 
+        Step 1: Full Screen Edge-to-Edge WebGL Canvas Component
+        Absolute background at z-index: -2
+      */}
+      {mounted && (
+        <div className="liquid-hero__canvas">
+          <Canvas
+            orthographic
+            camera={{ position: [0, 0, 1], zoom: 1 }}
+            gl={{ antialias: true, alpha: false, toneMapping: THREE.NoToneMapping }}
+            dpr={[1, 2]}
+            style={{ width: "100vw", height: "100vh" }}
+          >
+            <Suspense fallback={null}>
+              <LiquidImage
+                image={image}
+                cursorSize={cursorSize}
+                power={power}
+                distortion={distortion}
+                globalPointerRef={globalPointerRef}
+              />
+            </Suspense>
+          </Canvas>
+        </div>
+      )}
+
+      {/* Decorative Plus Symbols (+) */}
+      <span className="liquid-hero__plus" style={{ top: "53.5%", left: "53.5%" }}>+</span>
+      <span className="liquid-hero__plus" style={{ top: "63%", right: "23%" }}>+</span>
+      <span className="liquid-hero__plus" style={{ top: "52%", right: "10%" }}>+</span>
+
+      {/* Top Header Navigation with CORAUXIS Logo Image */}
+      <nav className="liquid-hero__nav">
+        <a href="#" className="liquid-hero__logo flex items-center">
+          <img
+            src="/images/logo.avif"
+            alt="CORAUXIS Logo"
+            className="h-7 sm:h-9 w-auto object-contain brightness-125"
+          />
+        </a>
+        <div className="liquid-hero__nav-links">
+          {[
+            { label: "Home", num: "01", href: "#" },
+            { label: "Portfolio", num: "02", href: "#showcase" },
+            { label: "About", num: "03", href: "#about" },
+            { label: "Contact", num: "04", href: "#contact" },
+          ].map((link) => (
+            <a key={link.label} href={link.href} className="liquid-hero__nav-link">
+              <span>{link.label}</span>
+              <span className="liquid-hero__nav-num">{link.num}</span>
+            </a>
+          ))}
+        </div>
+      </nav>
+
+      {/* Middle Content Section */}
+      <div className="liquid-hero__top-section">
+        {/* Left Subtext Block */}
+        <div className="liquid-hero__subtext-block">
+          <p className="liquid-hero__eyebrow">{eyebrow}</p>
+          <div className="liquid-hero__within">{withinText}</div>
+          <a href="#about" className="liquid-hero__explore">
+            <span>Explore Now</span>
+            <span className="liquid-hero__explore-arrow">┐</span>
+          </a>
+        </div>
+      </div>
+
+      {/* Lower Tag Block (Positioned above COR-AUXIS on left, matching Image 2) */}
+      <div className="liquid-hero__tag-block">
+        <div className="liquid-hero__tag-num">01/ AI FIRST</div>
+        <div className="liquid-hero__tag-title">AUTOMATE</div>
+        <div className="liquid-hero__tag-sub">Branding</div>
+      </div>
+
+      {/* Bottom Title & Copyright Section */}
+      <div className="liquid-hero__bottom-section">
+        <h1 className="liquid-hero__title">{title}</h1>
+        <div className="liquid-hero__footer">
+          <div>© 2026 |||||||| 19&apos;</div>
+        </div>
+      </div>
+    </section>
+  );
+}
