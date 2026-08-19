@@ -206,10 +206,10 @@ export default function Footer() {
 
             <a
               href="#contact"
-              className="inline-flex items-center gap-3 mt-7 pb-1 border-b border-white text-white text-sm sm:text-base font-semibold tracking-wide group hover:gap-4 transition-all font-[family-name:var(--font-urbanist)]"
+              className="inline-flex items-center gap-2 mt-7 pb-1 border-b border-white text-white text-sm sm:text-base font-semibold tracking-wide group font-[family-name:var(--font-urbanist)]"
             >
               <span>Contact Now</span>
-              <span className="text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+              <span className="text-xs inline-block -translate-y-1.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-2">
                 ┐
               </span>
             </a>
@@ -264,19 +264,20 @@ export default function Footer() {
           </h1>
 
           {/* Bottom Right Copyright & Precision Meter */}
-          <div className="flex items-end gap-2.5 shrink-0 sm:pb-2.5 md:pb-3.5 text-white/80 text-[11px] sm:text-xs font-mono select-none">
+          <div className="flex items-end gap-3 shrink-0 sm:pb-2.5 md:pb-3.5 text-white/90 text-xs sm:text-sm font-mono select-none">
             <span className="tracking-wide">© 2026</span>
             
-            {/* Precision Tick Marks */}
-            <div className="flex items-end gap-[3px] h-[20px] px-0.5 mb-[2px]">
-              <span className="w-[1px] h-[7px] bg-white/35" />
-              <span className="w-[1px] h-[7px] bg-white/35" />
-              <span className="w-[1px] h-[7px] bg-white/35" />
-              <span className="w-[1px] h-[7px] bg-white/35" />
-              <span className="w-[1px] h-[7px] bg-white/35" />
-              <span className="w-[1px] h-[7px] bg-white/35" />
-              <span className="w-[1px] h-[20px] bg-white/80" />
-              <span className="w-[1px] h-[7px] bg-white/35" />
+            {/* Precision Tick Marks (Expanded length & distinct tall tick) */}
+            <div className="flex items-end gap-1 h-[22px] px-0.5 mb-[2px]">
+              <span className="w-[1px] h-[8px] bg-white/40" />
+              <span className="w-[1px] h-[8px] bg-white/40" />
+              <span className="w-[1px] h-[8px] bg-white/40" />
+              <span className="w-[1px] h-[8px] bg-white/40" />
+              <span className="w-[1px] h-[8px] bg-white/40" />
+              <span className="w-[1px] h-[8px] bg-white/40" />
+              <span className="w-[1px] h-[8px] bg-white/40" />
+              <span className="w-[1.5px] h-[22px] bg-white" />
+              <span className="w-[1px] h-[8px] bg-white/40" />
             </div>
 
             <span className="tracking-wide">19&apos;</span>

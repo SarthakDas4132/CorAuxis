@@ -97,7 +97,7 @@ export default function ServicesSection() {
     <section
       ref={sectionRef}
       id="services"
-      className="relative bg-[#f2f2f4] text-zinc-900 pt-6 sm:pt-8 md:pt-10 pb-16 md:pb-[120px] px-4 sm:px-6 md:px-8 overflow-hidden"
+      className="relative bg-[#f2f2f4] text-zinc-900 py-14 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 overflow-hidden"
     >
       <div className="max-w-[1760px] w-full mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-14 lg:gap-20 items-start">

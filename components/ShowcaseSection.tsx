@@ -170,7 +170,7 @@ export default function ShowcaseSection() {
   return (
     <section
       id="showcase"
-      className="relative bg-[#f2f2f4] text-zinc-900 pt-16 md:pt-[100px] pb-20 md:pb-[140px] px-4 sm:px-6 md:px-8"
+      className="relative bg-[#f2f2f4] text-zinc-900 py-14 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8"
     >
       <div className="max-w-[1760px] w-full mx-auto">
         {/* Header Badge */}

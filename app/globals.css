@@ -156,6 +156,21 @@ html.lenis, html.lenis body {
   background-position: -90% center;
 }
 
+/* ---- Synchronized Floating animation for Tools Section Orbit Cards (All 6 move together) ---- */
+@keyframes floatAllToolsSync {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(14px);
+  }
+}
+
+.animate-float-sync {
+  animation: floatAllToolsSync 3.6s ease-in-out infinite;
+  will-change: transform;
+}
+
 /* ---- Floating animations for Tools Section Orbit Cards ---- */
 @keyframes floatTool1 {
   0%, 100% {
@@ -195,4 +210,3 @@ html.lenis, html.lenis body {
 .animate-float-3 {
   animation: floatTool3 6.5s ease-in-out infinite 1s;
 }
-

@@ -101,7 +101,7 @@ export default function FeaturesSection() {
     <section
       ref={sectionRef}
       id="features"
-      className="relative bg-[#f2f2f4] text-zinc-900 pt-16 md:pt-[100px] pb-20 md:pb-[140px] px-4 sm:px-6 md:px-8 overflow-hidden"
+      className="relative bg-[#f2f2f4] text-zinc-900 py-14 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 overflow-hidden"
     >
       <div className="max-w-[1440px] w-full mx-auto">
         {/* Header */}

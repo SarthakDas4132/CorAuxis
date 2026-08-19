@@ -274,6 +274,7 @@ export default function LiquidHero({
               <span />
               <span />
               <span />
+              <span />
               <span className="tall" />
               <span />
             </div>

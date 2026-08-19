@@ -225,35 +225,36 @@
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
-/* Precision Meter on Bottom Left */
+/* Precision Meter on Bottom Left (Expanded length & distinct tall tick) */
 .liquid-hero__meter {
   display: flex;
   align-items: flex-end;
-  gap: 8px;
+  gap: 10px;
   font-family: var(--font-geist-mono), monospace;
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.85);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
   letter-spacing: 0.06em;
 }
 
 .liquid-hero__ticks {
   display: flex;
   align-items: flex-end;
-  gap: 2px;
-  height: 14px;
-  margin-bottom: 1px;
+  gap: 4px;
+  height: 22px;
+  margin-bottom: 2px;
 }
 
 .liquid-hero__ticks span {
   display: inline-block;
   width: 1px;
-  height: 5px;
-  background: rgba(255, 255, 255, 0.35);
+  height: 8px;
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .liquid-hero__ticks span.tall {
-  height: 14px;
-  background: rgba(255, 255, 255, 0.8);
+  width: 1.5px;
+  height: 22px;
+  background: #ffffff;
 }
 
 /* Right Shifted Title Container */

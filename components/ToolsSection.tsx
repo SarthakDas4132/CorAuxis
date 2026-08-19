@@ -10,7 +10,7 @@ const toolCards = [
     // Top-left
     positionClass: "top-[6%] sm:top-[8%] left-[4%] sm:left-[10%] lg:left-[14%]",
     rotation: "-rotate-[14deg]",
-    animClass: "animate-float-1",
+    animClass: "animate-float-sync",
   },
   {
     name: "FastAPI",
@@ -18,7 +18,7 @@ const toolCards = [
     // Mid-left
     positionClass: "top-[40%] sm:top-[42%] left-[2%] sm:left-[5%] lg:left-[8%]",
     rotation: "-rotate-[8deg]",
-    animClass: "animate-float-2",
+    animClass: "animate-float-sync",
   },
   {
     name: "React",
@@ -26,7 +26,7 @@ const toolCards = [
     // Bottom-left
     positionClass: "bottom-[4%] sm:bottom-[6%] left-[6%] sm:left-[12%] lg:left-[16%]",
     rotation: "rotate-[8deg]",
-    animClass: "animate-float-3",
+    animClass: "animate-float-sync",
   },
   {
     name: "PostgreSQL",
@@ -34,7 +34,7 @@ const toolCards = [
     // Top-right
     positionClass: "top-[8%] sm:top-[10%] right-[4%] sm:right-[10%] lg:left-auto lg:right-[14%]",
     rotation: "rotate-[12deg]",
-    animClass: "animate-float-2",
+    animClass: "animate-float-sync",
   },
   {
     name: "LangChain",
@@ -42,7 +42,7 @@ const toolCards = [
     // Mid-right
     positionClass: "top-[42%] sm:top-[44%] right-[2%] sm:right-[5%] lg:left-auto lg:right-[8%]",
     rotation: "-rotate-[10deg]",
-    animClass: "animate-float-1",
+    animClass: "animate-float-sync",
   },
   {
     name: "Flutter",
@@ -50,7 +50,7 @@ const toolCards = [
     // Bottom-right
     positionClass: "bottom-[4%] sm:bottom-[6%] right-[6%] sm:right-[12%] lg:left-auto lg:right-[16%]",
     rotation: "rotate-[14deg]",
-    animClass: "animate-float-3",
+    animClass: "animate-float-sync",
   },
 ];
 
@@ -80,7 +80,7 @@ export default function ToolsSection() {
   }, []);
 
   return (
-    <section className="relative bg-[#f2f2f4] text-zinc-900 py-24 sm:py-32 md:py-44 px-4 sm:px-6 md:px-8 overflow-hidden">
+    <section className="relative bg-[#f2f2f4] text-zinc-900 py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 overflow-hidden">
       <div className="max-w-[1760px] w-full mx-auto relative min-h-[560px] sm:min-h-[640px] md:min-h-[720px] flex items-center justify-center">
         
         {/* Floating Tool Cards surrounding the center in an elliptical orbit */}
