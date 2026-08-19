@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "eslint"
   },
+  "allowScripts": {
+    "unrs-resolver": true
+  },
   "dependencies": {
     "@react-three/fiber": "^9.7.0",
     "clsx": "^2.1.1",
