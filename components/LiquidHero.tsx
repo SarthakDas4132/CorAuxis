@@ -67,6 +67,10 @@ interface LiquidImageProps {
   globalPointerRef: React.MutableRefObject<THREE.Vector2>;
 }
 
+// NOTE: WebGL Liquid Canvas animation is commented out per user request.
+// To re-enable the liquid distortion on mouse move, uncomment the Canvas block below.
+
+/*
 function LiquidImage({
   image,
   cursorSize = 0.5,
@@ -98,7 +102,6 @@ function LiquidImage({
     if (!materialRef.current) return;
     const shader = materialRef.current;
 
-    // Calculate actual texture aspect ratio dynamically
     const img = texture.image;
     const imgAspect = img && img.width && img.height ? img.width / img.height : 16 / 9;
     const canvasAspect = size.width / size.height;
@@ -107,7 +110,6 @@ function LiquidImage({
     shader.uniforms.uCanvasAspect.value = canvasAspect;
     shader.uniforms.uImageAspect.value = imgAspect;
 
-    // Smoothly lerp mouse uniform
     const targetPointer = globalPointerRef.current || localPointer.current;
     shader.uniforms.uMouse.value.lerp(targetPointer, 0.12);
   });
@@ -131,6 +133,7 @@ function LiquidImage({
     </mesh>
   );
 }
+*/
 
 interface LiquidHeroProps {
   image?: string;
@@ -147,31 +150,26 @@ export default function LiquidHero({
   eyebrow = "AI AUTOMATION • SOFTWARE DEVELOPMENT • DIGITAL TRANSFORMATION",
   withinText = "within 24 hours.",
   title = "COR-AUXIS",
-  cursorSize = 0.5,
-  power = 1,
-  distortion = 0.8,
 }: LiquidHeroProps) {
-  const [mounted, setMounted] = useState(false);
-  const globalPointerRef = useRef(new THREE.Vector2(0.5, 0.5));
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const handleGlobalMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width;
-    const y = 1.0 - (e.clientY - rect.top) / rect.height; // Invert Y for WebGL UV space
-    globalPointerRef.current.set(x, y);
-  };
-
   return (
-    <section className="liquid-hero" onMouseMove={handleGlobalMouseMove}>
+    <section className="liquid-hero">
       {/* 
-        Step 1: Full Screen Edge-to-Edge WebGL Canvas Component
-        Absolute background at z-index: -2
+        Background Image (WebGL liquid canvas is commented below)
       */}
-      {mounted && (
+      <div className="liquid-hero__bg-container">
+        <img
+          src={image}
+          alt="Hero Background"
+          className="liquid-hero__bg-img"
+        />
+      </div>
+
+      {/* 
+        ========================================================================
+        WebGL Liquid Distortion Canvas (Commented out per user request)
+        Uncomment the block below to restore the interactive liquid ripple effect:
+        ========================================================================
+        
         <div className="liquid-hero__canvas">
           <Canvas
             orthographic
@@ -191,7 +189,7 @@ export default function LiquidHero({
             </Suspense>
           </Canvas>
         </div>
-      )}
+      */}
 
       {/* Decorative Plus Symbols (+) */}
       <span className="liquid-hero__plus" style={{ top: "53.5%", left: "53.5%" }}>+</span>
@@ -235,19 +233,38 @@ export default function LiquidHero({
         </div>
       </div>
 
-      {/* Lower Tag Block (Positioned above COR-AUXIS on left, matching Image 2) */}
-      <div className="liquid-hero__tag-block">
-        <div className="liquid-hero__tag-num">01/ AI FIRST</div>
-        <div className="liquid-hero__tag-title">AUTOMATE</div>
-        <div className="liquid-hero__tag-sub">Branding</div>
-      </div>
-
-      {/* Bottom Title & Copyright Section */}
-      <div className="liquid-hero__bottom-section">
-        <h1 className="liquid-hero__title">{title}</h1>
-        <div className="liquid-hero__footer">
-          <div>© 2026 |||||||| 19&apos;</div>
+      {/* Bottom Row: Left Info (Tag + Meter) & Shifted Right COR-AUXIS Title */}
+      <div className="liquid-hero__bottom-row">
+        
+        {/* Bottom Left Info Stack */}
+        <div className="liquid-hero__left-meta">
+          <div className="liquid-hero__tag-block">
+            <div className="liquid-hero__tag-num">01/ AI FIRST</div>
+            <div className="liquid-hero__tag-title">AUTOMATE</div>
+            <div className="liquid-hero__tag-sub">Branding</div>
+          </div>
+          
+          <div className="liquid-hero__meter">
+            <span>© 2026</span>
+            <div className="liquid-hero__ticks">
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span className="tall" />
+              <span />
+            </div>
+            <span>19&apos;</span>
+          </div>
         </div>
+
+        {/* Shifted Right COR-AUXIS Title */}
+        <div className="liquid-hero__title-container">
+          <h1 className="liquid-hero__title">{title}</h1>
+        </div>
+
       </div>
     </section>
   );
