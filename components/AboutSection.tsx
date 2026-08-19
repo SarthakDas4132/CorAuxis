@@ -55,7 +55,7 @@ export default function AboutSection() {
     return () => cancelAnimationFrame(animationFrame);
   }, [isInView]);
 
-  // 3. Lenis-compatible RAF parallax scroll effect for Globe image
+  // 3. Lenis-compatible RAF parallax scroll effect for Globe image (gentle, slow motion)
   useEffect(() => {
     let animationFrameId: number;
 
@@ -63,18 +63,17 @@ export default function AboutSection() {
       if (sectionRef.current) {
         const rect = sectionRef.current.getBoundingClientRect();
         
-        // Active visual window: starts when user arrives at About section (rect.top around 450px)
-        // and finishes when the card is centered in view (rect.top around -100px)
-        const startPoint = 450;
-        const endPoint = -100;
+        // Active visual window: spans smoothly as the section scrolls through view
+        const windowHeight = typeof window !== "undefined" ? window.innerHeight : 900;
+        const startPoint = windowHeight * 0.95;
+        const endPoint = -350;
         const totalDist = startPoint - endPoint;
 
         const rawFraction = (startPoint - rect.top) / totalDist;
         const progress = Math.min(Math.max(rawFraction, 0), 1);
 
-        // At progress 0 (When user arrives): translateY = +300px -> Subtle globe horizon sliver at the bottom edge
-        // At progress 1 (When card is centered): translateY = 0px -> Globe rises right under Start a Project button
-        const shift = (1 - progress) * 300; 
+        // Gentle and slow parallax: moves softly across only ~130px throughout the entire scroll
+        const shift = (1 - progress) * 130; 
         setTranslateY(shift);
       }
       animationFrameId = requestAnimationFrame(updateParallax);
@@ -132,6 +131,8 @@ export default function AboutSection() {
               className="absolute -bottom-[580px] sm:-bottom-[600px] md:-bottom-[620px] left-1/2 w-[145%] sm:w-[135%] md:w-[125%] max-w-[1000px] aspect-square pointer-events-none z-0"
               style={{
                 transform: `translate3d(-50%, ${translateY}px, 0)`,
+                transition: "transform 0.12s linear",
+                willChange: "transform",
               }}
             >
               {/* Soft Radiant White Aura Layers around the dome */}
