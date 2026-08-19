@@ -172,7 +172,7 @@ export default function LiquidHero({
   return (
     <section className="liquid-hero">
       {/* 
-        Parallax Background Image (moves up on scroll down, vice versa)
+        Parallax Background Image (moves up on scroll down, vice versa — slow and smooth)
       */}
       <div className="liquid-hero__bg-container">
         <img
@@ -180,7 +180,7 @@ export default function LiquidHero({
           alt="Hero Background"
           className="liquid-hero__bg-img"
           style={{
-            transform: `translate3d(0, -${scrollY * 0.36}px, 0)`,
+            transform: `translate3d(0, -${scrollY * 0.16}px, 0)`,
           }}
         />
       </div>

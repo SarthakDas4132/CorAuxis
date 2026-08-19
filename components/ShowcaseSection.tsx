@@ -80,12 +80,15 @@ function ProjectCard({ project, idx }: { project: (typeof projects)[0]; idx: num
     <div className="group rounded-[28px] bg-[#f0f0f3] overflow-hidden cursor-pointer border border-white border-b-zinc-300/80 shadow-[inset_0_-6px_0_0_rgba(0,0,0,0.06),0_16px_36px_rgba(0,0,0,0.11),0_4px_12px_rgba(0,0,0,0.06)] transition-shadow duration-500">
       {/* Project Image */}
       <div className="px-4 md:px-6 pt-4 md:pt-6">
-        <div className="relative w-full overflow-hidden rounded-[20px]" style={{ aspectRatio: "16/7" }}>
+        <div
+          className="relative w-full overflow-hidden rounded-[20px] max-h-[460px] md:max-h-[500px]"
+          style={{ aspectRatio: "2.35/1" }}
+        >
           <Image
             src={project.image}
             alt={project.title}
             fill
-            className="object-cover group-hover:scale-[1.025] transition-transform duration-700"
+            className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
             sizes="(max-width: 768px) 100vw, 1760px"
             priority={idx === 0}
           />
