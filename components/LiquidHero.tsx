@@ -202,9 +202,9 @@ export default function LiquidHero({
       <nav className="liquid-hero__nav">
         <a href="#" className="liquid-hero__logo flex items-center">
           <img
-            src="/images/logo.avif"
+            src="/images/logo.png"
             alt="CORAUXIS Logo"
-            className="h-7 sm:h-9 w-auto object-contain brightness-125"
+            className="h-6 sm:h-8 md:h-9 w-auto object-contain"
           />
         </a>
 
