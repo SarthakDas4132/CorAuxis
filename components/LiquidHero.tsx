@@ -152,6 +152,7 @@ export default function LiquidHero({
   title = "COR-AUXIS",
 }: LiquidHeroProps) {
   const [scrollY, setScrollY] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     let ticking = false;
@@ -169,6 +170,13 @@ export default function LiquidHero({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const navLinks = [
+    { label: "Home", num: "01", href: "#" },
+    { label: "Portfolio", num: "02", href: "#showcase" },
+    { label: "About", num: "03", href: "#about" },
+    { label: "Contact", num: "04", href: "#contact" },
+  ];
+
   return (
     <section className="liquid-hero">
       {/* 
@@ -185,33 +193,6 @@ export default function LiquidHero({
         />
       </div>
 
-      {/* 
-        ========================================================================
-        WebGL Liquid Distortion Canvas (Commented out per user request)
-        Uncomment the block below to restore the interactive liquid ripple effect:
-        ========================================================================
-        
-        <div className="liquid-hero__canvas">
-          <Canvas
-            orthographic
-            camera={{ position: [0, 0, 1], zoom: 1 }}
-            gl={{ antialias: true, alpha: false, toneMapping: THREE.NoToneMapping }}
-            dpr={[1, 2]}
-            style={{ width: "100vw", height: "100vh" }}
-          >
-            <Suspense fallback={null}>
-              <LiquidImage
-                image={image}
-                cursorSize={cursorSize}
-                power={power}
-                distortion={distortion}
-                globalPointerRef={globalPointerRef}
-              />
-            </Suspense>
-          </Canvas>
-        </div>
-      */}
-
       {/* Decorative Plus Symbols (+) */}
       <span className="liquid-hero__plus" style={{ top: "53.5%", left: "53.5%" }}>+</span>
       <span className="liquid-hero__plus" style={{ top: "63%", right: "23%" }}>+</span>
@@ -226,18 +207,49 @@ export default function LiquidHero({
             className="h-7 sm:h-9 w-auto object-contain brightness-125"
           />
         </a>
+
+        {/* Desktop Navigation Links */}
         <div className="liquid-hero__nav-links">
-          {[
-            { label: "Home", num: "01", href: "#" },
-            { label: "Portfolio", num: "02", href: "#showcase" },
-            { label: "About", num: "03", href: "#about" },
-            { label: "Contact", num: "04", href: "#contact" },
-          ].map((link) => (
+          {navLinks.map((link) => (
             <a key={link.label} href={link.href} className="liquid-hero__nav-link">
               <span>{link.label}</span>
               <span className="liquid-hero__nav-num">{link.num}</span>
             </a>
           ))}
+        </div>
+
+        {/* Mobile Navigation Wrapper (Button + Dropdown Submenu) */}
+        <div className="relative md:hidden pointer-events-auto">
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="liquid-hero__hamburger"
+            aria-label="Toggle mobile menu"
+          >
+            <span className={`liquid-hero__hamburger-line ${mobileMenuOpen ? "open-top" : ""}`} />
+            <span className={`liquid-hero__hamburger-line ${mobileMenuOpen ? "open-bottom" : ""}`} />
+          </button>
+
+          {/* Mobile Submenu Dropdown Panel */}
+          {mobileMenuOpen && (
+            <div className="liquid-hero__mobile-menu">
+              <div className="flex flex-col gap-2">
+                {navLinks.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="liquid-hero__mobile-link"
+                  >
+                    <span className="text-sm font-semibold text-white tracking-wide">
+                      {link.label}
+                    </span>
+                    <span className="font-mono text-[11px] text-white/50">{link.num}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </nav>
 

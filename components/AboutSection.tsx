@@ -126,9 +126,9 @@ export default function AboutSection() {
               </a>
             </div>
 
-            {/* Moving Globe + Aura Container - Rises smoothly from bottom edge up to Start a Project button */}
+            {/* Moving Globe + Aura Container - Perfectly positioned and visible on mobile, tablet, and desktop */}
             <div
-              className="absolute -bottom-[580px] sm:-bottom-[600px] md:-bottom-[620px] left-1/2 w-[145%] sm:w-[135%] md:w-[125%] max-w-[1000px] aspect-square pointer-events-none z-0"
+              className="absolute -bottom-[260px] sm:-bottom-[380px] md:-bottom-[480px] lg:-bottom-[560px] left-1/2 w-[165%] sm:w-[145%] md:w-[130%] lg:w-[125%] max-w-[1000px] aspect-square pointer-events-none z-0"
               style={{
                 transform: `translate3d(-50%, ${translateY}px, 0)`,
                 transition: "transform 0.12s linear",
@@ -136,8 +136,8 @@ export default function AboutSection() {
               }}
             >
               {/* Soft Radiant White Aura Layers around the dome */}
-              <div className="absolute top-[8%] left-1/2 -translate-x-1/2 w-[110%] h-[50%] bg-white/20 rounded-full blur-[100px] pointer-events-none" />
-              <div className="absolute top-[12%] left-1/2 -translate-x-1/2 w-[85%] h-[35%] bg-white/35 rounded-full blur-[65px] pointer-events-none" />
+              <div className="absolute top-[8%] left-1/2 -translate-x-1/2 w-[110%] h-[50%] bg-white/20 rounded-full blur-[80px] sm:blur-[100px] pointer-events-none" />
+              <div className="absolute top-[12%] left-1/2 -translate-x-1/2 w-[85%] h-[35%] bg-white/35 rounded-full blur-[50px] sm:blur-[65px] pointer-events-none" />
 
               <Image
                 src="/images/globe.png"

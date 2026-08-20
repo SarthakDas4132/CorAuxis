@@ -281,6 +281,85 @@
   opacity: 0.98;
 }
 
+/* Mobile Hamburger Button - 2 crisp horizontal lines */
+.liquid-hero__hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  pointer-events: auto;
+  padding: 8px 4px;
+  z-index: 50;
+}
+
+.liquid-hero__hamburger-line {
+  display: block;
+  width: 26px;
+  height: 2px;
+  background-color: #ffffff;
+  border-radius: 1px;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.liquid-hero__hamburger-line.open-top {
+  transform: translateY(4px) rotate(45deg);
+}
+
+.liquid-hero__hamburger-line.open-bottom {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+/* Mobile Submenu Dropdown Panel */
+.liquid-hero__mobile-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 200px;
+  background: rgba(12, 12, 14, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 18px;
+  padding: 10px;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.85), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  pointer-events: auto;
+  z-index: 100;
+  animation: menuDrop 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes menuDrop {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.liquid-hero__mobile-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid transparent;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.liquid-hero__mobile-link:hover,
+.liquid-hero__mobile-link:active {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
 @media (max-width: 900px) {
   .liquid-hero__bottom-row {
     flex-direction: column;
@@ -305,7 +384,10 @@
     inset: 20px;
   }
   .liquid-hero__nav-links {
-    gap: 16px;
+    display: none !important;
+  }
+  .liquid-hero__hamburger {
+    display: flex !important;
   }
   .liquid-hero__top-section {
     flex-direction: column;
@@ -313,4 +395,5 @@
     margin-top: 60px;
   }
 }
+
 
