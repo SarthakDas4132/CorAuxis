@@ -220,14 +220,14 @@ export default function Footer() {
 
                 <div className="flex flex-col">
                   <label className="text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-2 font-[family-name:var(--font-urbanist)]">
-                    Email*
+                    Your Email Address*
                   </label>
                   <input
                     type="email"
                     name="email"
                     autoComplete="email"
                     required
-                    placeholder="fuel@mail.com"
+                    placeholder="you@company.com"
                     value={formData.email}
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
