@@ -370,13 +370,17 @@ export default function Footer() {
         <div className="w-full h-px bg-zinc-800/80 mt-8 mb-10 sm:mb-14" />
 
         {/* ========================================================
-            BOTTOM: Giant CORAUXIS Wordmark & Inline Copyright Meter
+            BOTTOM: Giant CORAUXIS Brand Logo & Inline Copyright Meter
            ======================================================== */}
         <div className="relative w-full flex flex-col sm:flex-row sm:items-end justify-between gap-6 pt-2 sm:pt-4">
-          {/* Giant Brand Name */}
-          <h1 className="text-[14vw] sm:text-[11.5vw] md:text-[11.8vw] lg:text-[11.2vw] font-bold text-white tracking-tighter leading-[0.82] select-none uppercase font-[family-name:var(--font-urbanist)] opacity-95 shrink min-w-0">
-            CORAUXIS
-          </h1>
+          {/* Giant Brand Logo */}
+          <div className="shrink min-w-0 max-w-[85vw] sm:max-w-[70vw]">
+            <img
+              src="/images/logo.png"
+              alt="CORAUXIS Logo"
+              className="h-14 sm:h-20 md:h-24 lg:h-32 w-auto object-contain select-none"
+            />
+          </div>
 
           {/* Bottom Right Copyright & Precision Meter */}
           <div className="flex items-end gap-3 shrink-0 sm:pb-2.5 md:pb-3.5 text-white/90 text-xs sm:text-sm font-mono select-none">
