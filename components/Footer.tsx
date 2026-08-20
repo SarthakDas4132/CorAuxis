@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Footer() {
   const [formData, setFormData] = useState({
@@ -10,12 +10,77 @@ export default function Footer() {
     email: "",
     message: "",
   });
-  const [submitted, setSubmitted] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
+  const [loadTime, setLoadTime] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [statusMsg, setStatusMsg] = useState<{
+    type: "success" | "error" | "";
+    text: string;
+  }>({ type: "", text: "" });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    setLoadTime(Date.now());
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 4000);
+    setStatusMsg({ type: "", text: "" });
+
+    // Anti-spam honeypot
+    if (honeypot) {
+      return;
+    }
+
+    // Minimum message length check (at least 15 characters)
+    if (formData.message.trim().length < 15) {
+      setStatusMsg({
+        type: "error",
+        text: "Please write at least 15 characters in your message.",
+      });
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          hp_field: honeypot,
+          loadTime,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && !data.error) {
+        setStatusMsg({
+          type: "success",
+          text: "Message sent successfully to sarthak.zfi@gmail.com! We will get back to you within 24 hours.",
+        });
+        setFormData({
+          firstName: "",
+          lastName: "",
+          category: "",
+          email: "",
+          message: "",
+        });
+      } else {
+        setStatusMsg({
+          type: "error",
+          text: data.error || "Failed to send message. Please try again.",
+        });
+      }
+    } catch {
+      setStatusMsg({
+        type: "error",
+        text: "Network error. You can also reach out directly to sarthak.zfi@gmail.com",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -52,13 +117,27 @@ export default function Footer() {
               
               {/* Subheading */}
               <p className="mt-3 text-sm sm:text-base text-zinc-400 font-medium leading-relaxed font-[family-name:var(--font-urbanist)]">
-                Let&apos;s Build someting great together! Audit and entire structur in next 24hrs.
+                Let&apos;s build something great together! Audit and entire structure in next 24hrs.
               </p>
             </div>
 
             {/* Form Fields */}
             <form onSubmit={handleSubmit} className="mt-10 sm:mt-12 flex flex-col gap-8">
               
+              {/* Anti-Spam Honeypot Field (Hidden from humans) */}
+              <div className="hidden" aria-hidden="true">
+                <label htmlFor="company_hp">Do not fill this field</label>
+                <input
+                  type="text"
+                  id="company_hp"
+                  name="company_hp"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
+
               {/* Row 1: First Name & Last Name */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-7 sm:gap-10">
                 <div className="flex flex-col">
@@ -67,6 +146,8 @@ export default function Footer() {
                   </label>
                   <input
                     type="text"
+                    name="firstName"
+                    autoComplete="given-name"
                     required
                     placeholder="Jim"
                     value={formData.firstName}
@@ -83,6 +164,8 @@ export default function Footer() {
                   </label>
                   <input
                     type="text"
+                    name="lastName"
+                    autoComplete="family-name"
                     required
                     placeholder="Hopper"
                     value={formData.lastName}
@@ -94,7 +177,7 @@ export default function Footer() {
                 </div>
               </div>
 
-              {/* Row 2: Category & Email */}
+              {/* Row 2: Category & Email with Browser Auto-fill */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-7 sm:gap-10">
                 <div className="flex flex-col relative">
                   <label className="text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-2 font-[family-name:var(--font-urbanist)]">
@@ -102,6 +185,7 @@ export default function Footer() {
                   </label>
                   <div className="relative">
                     <select
+                      name="category"
                       value={formData.category}
                       onChange={(e) =>
                         setFormData({ ...formData, category: e.target.value })
@@ -136,10 +220,12 @@ export default function Footer() {
 
                 <div className="flex flex-col">
                   <label className="text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-2 font-[family-name:var(--font-urbanist)]">
-                    Email
+                    Email*
                   </label>
                   <input
                     type="email"
+                    name="email"
+                    autoComplete="email"
                     required
                     placeholder="fuel@mail.com"
                     value={formData.email}
@@ -151,14 +237,22 @@ export default function Footer() {
                 </div>
               </div>
 
-              {/* Row 3: Message */}
+              {/* Row 3: Message with Minimum Length Constraint (15+ characters) */}
               <div className="flex flex-col">
-                <label className="text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-2 font-[family-name:var(--font-urbanist)]">
-                  Message
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label className="text-xs font-semibold text-zinc-300 uppercase tracking-wider font-[family-name:var(--font-urbanist)]">
+                    Message*
+                  </label>
+                  <span className="text-[11px] text-zinc-500 font-mono">
+                    min. 15 characters ({formData.message.trim().length}/15)
+                  </span>
+                </div>
                 <textarea
+                  name="message"
+                  required
+                  minLength={15}
                   rows={3}
-                  placeholder="Enter your message....."
+                  placeholder="Tell us about your project or inquiry (minimum 15 characters)....."
                   value={formData.message}
                   onChange={(e) =>
                     setFormData({ ...formData, message: e.target.value })
@@ -167,13 +261,34 @@ export default function Footer() {
                 />
               </div>
 
+              {/* Status Message Notification */}
+              {statusMsg.text && (
+                <div
+                  className={`p-3.5 rounded-xl text-xs sm:text-sm font-medium font-[family-name:var(--font-urbanist)] transition-all ${
+                    statusMsg.type === "success"
+                      ? "bg-emerald-950/80 text-emerald-300 border border-emerald-500/30"
+                      : "bg-red-950/80 text-red-300 border border-red-500/30"
+                  }`}
+                >
+                  {statusMsg.text}
+                </div>
+              )}
+
               {/* Submit Button */}
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full py-4 rounded-xl sm:rounded-2xl bg-[#222225] hover:bg-[#2e2e34] active:scale-[0.99] text-white font-medium text-sm sm:text-base tracking-wide transition-all duration-300 shadow-[0_8px_20px_rgba(0,0,0,0.3)] font-[family-name:var(--font-urbanist)]"
+                  disabled={loading}
+                  className="w-full py-4 rounded-xl sm:rounded-2xl bg-[#222225] hover:bg-[#2e2e34] active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium text-sm sm:text-base tracking-wide transition-all duration-300 shadow-[0_8px_20px_rgba(0,0,0,0.3)] font-[family-name:var(--font-urbanist)] flex items-center justify-center gap-2"
                 >
-                  {submitted ? "Message Sent Successfully!" : "Submit"}
+                  {loading ? (
+                    <>
+                      <span className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                      <span>Sending message...</span>
+                    </>
+                  ) : (
+                    "Submit"
+                  )}
                 </button>
               </div>
             </form>
@@ -198,14 +313,14 @@ export default function Footer() {
             </h3>
             
             <a
-              href="mailto:contact@corauxis.com"
+              href="mailto:sarthak.zfi@gmail.com"
               className="text-3xl sm:text-5xl md:text-6xl lg:text-[68px] font-bold text-white tracking-tight leading-tight block mt-1 hover:text-zinc-300 transition-colors font-[family-name:var(--font-urbanist)] break-all sm:break-normal"
             >
-              contact@corauxis.com
+              sarthak.zfi@gmail.com
             </a>
 
             <a
-              href="#contact"
+              href="mailto:sarthak.zfi@gmail.com"
               className="inline-flex items-center gap-2 mt-7 pb-1 border-b border-white text-white text-sm sm:text-base font-semibold tracking-wide group font-[family-name:var(--font-urbanist)]"
             >
               <span>Contact Now</span>
