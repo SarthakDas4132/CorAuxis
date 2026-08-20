@@ -7,48 +7,48 @@ const toolCards = [
   {
     name: "Python",
     image: "/images/tools/python.png",
-    // Top-left
-    positionClass: "top-[6%] sm:top-[8%] left-[4%] sm:left-[10%] lg:left-[14%]",
+    // Top-left (spread further out)
+    positionClass: "top-[4%] sm:top-[6%] left-[2%] sm:left-[5%] lg:left-[7%]",
     rotation: "-rotate-[14deg]",
     animClass: "animate-float-sync",
   },
   {
     name: "FastAPI",
     image: "/images/tools/fastapi.png",
-    // Mid-left
-    positionClass: "top-[40%] sm:top-[42%] left-[2%] sm:left-[5%] lg:left-[8%]",
+    // Mid-left (spread further out)
+    positionClass: "top-[40%] sm:top-[42%] left-[0.5%] sm:left-[2%] lg:left-[3%]",
     rotation: "-rotate-[8deg]",
     animClass: "animate-float-sync",
   },
   {
     name: "React",
     image: "/images/tools/react.svg",
-    // Bottom-left
-    positionClass: "bottom-[4%] sm:bottom-[6%] left-[6%] sm:left-[12%] lg:left-[16%]",
+    // Bottom-left (spread further out)
+    positionClass: "bottom-[3%] sm:bottom-[5%] left-[2.5%] sm:left-[6%] lg:left-[9%]",
     rotation: "rotate-[8deg]",
     animClass: "animate-float-sync",
   },
   {
     name: "PostgreSQL",
     image: "/images/tools/postgres.png",
-    // Top-right
-    positionClass: "top-[8%] sm:top-[10%] right-[4%] sm:right-[10%] lg:left-auto lg:right-[14%]",
+    // Top-right (spread further out)
+    positionClass: "top-[5%] sm:top-[7%] right-[2%] sm:right-[5%] lg:left-auto lg:right-[7%]",
     rotation: "rotate-[12deg]",
     animClass: "animate-float-sync",
   },
   {
     name: "LangChain",
     image: "/images/tools/langchain.svg",
-    // Mid-right
-    positionClass: "top-[42%] sm:top-[44%] right-[2%] sm:right-[5%] lg:left-auto lg:right-[8%]",
+    // Mid-right (spread further out)
+    positionClass: "top-[42%] sm:top-[44%] right-[0.5%] sm:right-[2%] lg:left-auto lg:right-[3%]",
     rotation: "-rotate-[10deg]",
     animClass: "animate-float-sync",
   },
   {
     name: "Flutter",
     image: "/images/tools/flutter.svg",
-    // Bottom-right
-    positionClass: "bottom-[4%] sm:bottom-[6%] right-[6%] sm:right-[12%] lg:left-auto lg:right-[16%]",
+    // Bottom-right (spread further out)
+    positionClass: "bottom-[3%] sm:bottom-[5%] right-[2.5%] sm:right-[6%] lg:left-auto lg:right-[9%]",
     rotation: "rotate-[14deg]",
     animClass: "animate-float-sync",
   },
@@ -81,9 +81,9 @@ export default function ToolsSection() {
 
   return (
     <section className="relative bg-[#EDECEC] text-zinc-900 py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 overflow-hidden">
-      <div className="max-w-[1760px] w-full mx-auto relative min-h-[560px] sm:min-h-[640px] md:min-h-[720px] flex items-center justify-center">
+      <div className="max-w-[1760px] w-full mx-auto relative min-h-[580px] sm:min-h-[660px] md:min-h-[740px] flex items-center justify-center">
         
-        {/* Floating Tool Cards surrounding the center in an elliptical orbit */}
+        {/* Floating Tool Cards surrounding the center in a wide elliptical orbit */}
         {toolCards.map((tool) => (
           <div
             key={tool.name}
@@ -112,23 +112,23 @@ export default function ToolsSection() {
         {/* Central Content */}
         <div
           ref={sectionRef}
-          className="relative z-20 text-center max-w-2xl sm:max-w-3xl mx-auto px-4 py-8 pointer-events-auto"
+          className="relative z-20 text-center max-w-[560px] mx-auto px-4 py-8 pointer-events-auto"
         >
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-zinc-200 text-xs font-semibold text-zinc-700 tracking-wide shadow-sm mb-6 sm:mb-8">
+          {/* Badge with red text */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-zinc-200/90 text-xs font-semibold text-[#FD3A25] tracking-wide shadow-sm mb-6 sm:mb-8">
             <span className="w-2 h-2 rounded-full bg-[#FD3A25]" />
             Tools
           </div>
 
-          {/* Heading */}
-          <h2 className="text-4xl sm:text-5xl md:text-[60px] font-bold tracking-tight text-zinc-900 leading-[1.08] font-[family-name:var(--font-urbanist)]">
+          {/* Exact 72px Urbanist Heading matching Framer / User Inspect Screenshot */}
+          <h2 className="text-[36px] sm:text-[54px] md:text-[72px] font-semibold tracking-[-0.02em] text-[#292C2E] leading-[1.08] font-[family-name:var(--font-urbanist)] max-w-[530px] mx-auto">
             We work with
             <br />
             powerful AI tools
           </h2>
 
-          {/* Description */}
-          <p className="mt-5 sm:mt-6 text-sm sm:text-base text-zinc-600 font-medium leading-relaxed max-w-lg sm:max-w-xl mx-auto font-[family-name:var(--font-urbanist)]">
+          {/* Exact 16px Urbanist Description matching Framer / User Inspect Screenshot */}
+          <p className="mt-5 sm:mt-6 text-[15px] sm:text-[16px] text-[#09090B] font-normal leading-[1.5] max-w-[490px] mx-auto font-[family-name:var(--font-urbanist)]">
             We design, build, and evaluate with a modern AI stack-LLMs, vector search, orchestration, and observability-so your features are fast, reliable, and secure.
           </p>
 
