@@ -149,7 +149,7 @@ export default function LiquidHero({
   image = "/images/bg.png",
   eyebrow = "AI AUTOMATION • SOFTWARE DEVELOPMENT • DIGITAL TRANSFORMATION",
   withinText = "within 24 hours.",
-  title = "COR-AUXIS",
+  title = "CORAUXIS",
 }: LiquidHeroProps) {
   const [scrollY, setScrollY] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -266,7 +266,7 @@ export default function LiquidHero({
         </div>
       </div>
 
-      {/* Bottom Row: Left Info (Tag + Meter) & Shifted Right COR-AUXIS Title */}
+      {/* Bottom Row: Left Info (Tag + Meter) & Shifted Right CORAUXIS Title */}
       <div className="liquid-hero__bottom-row">
         
         {/* Bottom Left Info Stack */}
@@ -294,7 +294,7 @@ export default function LiquidHero({
           </div>
         </div>
 
-        {/* Shifted Right COR-AUXIS Title */}
+        {/* Shifted Right CORAUXIS Title */}
         <div className="liquid-hero__title-container">
           <h1 className="liquid-hero__title">{title}</h1>
         </div>

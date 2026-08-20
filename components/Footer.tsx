@@ -255,12 +255,12 @@ export default function Footer() {
         <div className="w-full h-px bg-zinc-800/80 mt-8 mb-10 sm:mb-14" />
 
         {/* ========================================================
-            BOTTOM: Giant COR-AUXIS Wordmark & Inline Copyright Meter
+            BOTTOM: Giant CORAUXIS Wordmark & Inline Copyright Meter
            ======================================================== */}
         <div className="relative w-full flex flex-col sm:flex-row sm:items-end justify-between gap-6 pt-2 sm:pt-4">
           {/* Giant Brand Name */}
           <h1 className="text-[14vw] sm:text-[11.5vw] md:text-[11.8vw] lg:text-[11.2vw] font-bold text-white tracking-tighter leading-[0.82] select-none uppercase font-[family-name:var(--font-urbanist)] opacity-95 shrink min-w-0">
-            COR-AUXIS
+            CORAUXIS
           </h1>
 
           {/* Bottom Right Copyright & Precision Meter */}

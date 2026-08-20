@@ -80,7 +80,7 @@ export default function ToolsSection() {
   }, []);
 
   return (
-    <section className="relative bg-[#f2f2f4] text-zinc-900 py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 overflow-hidden">
+    <section className="relative bg-[#EDECEC] text-zinc-900 py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 overflow-hidden">
       <div className="max-w-[1760px] w-full mx-auto relative min-h-[560px] sm:min-h-[640px] md:min-h-[720px] flex items-center justify-center">
         
         {/* Floating Tool Cards surrounding the center in an elliptical orbit */}
