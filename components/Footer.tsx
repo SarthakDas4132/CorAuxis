@@ -302,53 +302,118 @@ export default function Footer() {
         <div className="w-full h-px bg-zinc-800/80 my-16 sm:my-24 md:my-28" />
 
         {/* ========================================================
-            MIDDLE SECTION: Let's Work Together & Navigation Links
+            MIDDLE SECTION: Contact Details & Navigation Columns
            ======================================================== */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start justify-between">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-14 items-start justify-between">
           
-          {/* Left Column: Direct Contact & CTA Link */}
-          <div className="lg:col-span-8">
-            <h3 className="text-2xl sm:text-4xl md:text-5xl font-medium text-zinc-400 tracking-tight font-[family-name:var(--font-urbanist)]">
-              Let’s work together
-            </h3>
-            
-            <a
-              href="mailto:sarthak.zfi@gmail.com"
-              className="text-3xl sm:text-5xl md:text-6xl lg:text-[68px] font-bold text-white tracking-tight leading-tight block mt-1 hover:text-zinc-300 transition-colors font-[family-name:var(--font-urbanist)] break-all sm:break-normal"
-            >
-              sarthak.zfi@gmail.com
-            </a>
+          {/* Left Column (6 cols): Direct Contact Information & CTA */}
+          <div className="lg:col-span-6 flex flex-col gap-7">
+            <div>
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white tracking-tight font-[family-name:var(--font-urbanist)]">
+                Let’s work together
+              </h3>
+              <a
+                href="mailto:sarthak.zfi@gmail.com"
+                className="text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight block mt-2 hover:text-[#FD3A25] transition-colors font-[family-name:var(--font-urbanist)] break-all"
+              >
+                sarthak.zfi@gmail.com
+              </a>
+            </div>
 
-            <a
-              href="mailto:sarthak.zfi@gmail.com"
-              className="inline-flex items-center gap-2 mt-7 pb-1 border-b border-white text-white text-sm sm:text-base font-semibold tracking-wide group font-[family-name:var(--font-urbanist)]"
-            >
-              <span>Contact Now</span>
-              <span className="text-xs inline-block -translate-y-1.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-2">
-                ┐
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-1">
+              {/* Phone */}
+              <div className="flex flex-col">
+                <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest font-[family-name:var(--font-urbanist)] mb-1.5">
+                  PHONE
+                </span>
+                <a
+                  href="tel:+919209552809"
+                  className="text-sm sm:text-base text-zinc-300 hover:text-white font-medium transition-colors font-[family-name:var(--font-urbanist)]"
+                >
+                  +91-9209552809
+                </a>
+              </div>
+
+              {/* Email */}
+              <div className="flex flex-col">
+                <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest font-[family-name:var(--font-urbanist)] mb-1.5">
+                  EMAIL
+                </span>
+                <a
+                  href="mailto:support@m-auxis.com"
+                  className="text-sm sm:text-base text-zinc-300 hover:text-white font-medium transition-colors font-[family-name:var(--font-urbanist)]"
+                >
+                  support@m-auxis.com
+                </a>
+              </div>
+            </div>
+
+            {/* Address */}
+            <div className="flex flex-col">
+              <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest font-[family-name:var(--font-urbanist)] mb-1.5">
+                ADDRESS
               </span>
-            </a>
+              <p className="text-sm sm:text-base text-zinc-300 font-medium leading-relaxed font-[family-name:var(--font-urbanist)] max-w-md">
+                12th floor, One West, Balewadi High St,<br />
+                Balewadi, Pune, Maharashtra 411045
+              </p>
+            </div>
+
+            <div className="pt-1">
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-2 pb-1 border-b border-white text-white text-sm sm:text-base font-semibold tracking-wide group font-[family-name:var(--font-urbanist)]"
+              >
+                <span>Contact Now</span>
+                <span className="text-xs inline-block -translate-y-1.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-2">
+                  ┐
+                </span>
+              </a>
+            </div>
           </div>
 
-          {/* Right Column: Navigation List */}
-          <div className="lg:col-span-4 w-full flex flex-col">
+          {/* Middle Navigation Column (3 cols) */}
+          <div className="lg:col-span-3 flex flex-col gap-3.5">
+            <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest font-[family-name:var(--font-urbanist)] mb-1">
+              SERVICES
+            </span>
             {[
-              { label: "Home", num: "01", href: "#" },
-              { label: "Portfolio", num: "02", href: "#showcase" },
-              { label: "About", num: "03", href: "#about" },
-              { label: "Contact", num: "04", href: "#contact" },
+              { label: "SERVICES", href: "#showcase" },
+              { label: "PROCESS", href: "#features" },
+              { label: "REVIEWS", href: "#about" },
+              { label: "ABOUT", href: "#about" },
             ].map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="flex items-center justify-between py-3.5 border-b border-zinc-800/80 group hover:border-zinc-500 transition-colors"
+                className="text-sm sm:text-base font-semibold text-zinc-300 hover:text-white transition-colors py-0.5 font-[family-name:var(--font-urbanist)] uppercase tracking-wider"
               >
-                <span className="text-white text-sm sm:text-base font-semibold group-hover:translate-x-1 transition-transform font-[family-name:var(--font-urbanist)]">
-                  {link.label}
-                </span>
-                <span className="text-zinc-500 text-xs font-mono">
-                  {link.num}
-                </span>
+                {link.label}
+              </a>
+            ))}
+          </div>
+
+          {/* Right Socials Column (3 cols) */}
+          <div className="lg:col-span-3 flex flex-col gap-3.5">
+            <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest font-[family-name:var(--font-urbanist)] mb-1">
+              CONNECT
+            </span>
+            {[
+              { label: "LINKEDIN", href: "https://linkedin.com" },
+              { label: "FACEBOOK", href: "https://facebook.com" },
+              { label: "TWITTER", href: "https://x.com" },
+              { label: "INSTAGRAM", href: "https://instagram.com" },
+              { label: "YOUTUBE", href: "https://youtube.com" },
+            ].map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm sm:text-base font-semibold text-zinc-300 hover:text-white transition-colors py-0.5 font-[family-name:var(--font-urbanist)] uppercase tracking-wider flex items-center justify-between group"
+              >
+                <span>{social.label}</span>
+                <span className="text-xs text-zinc-600 group-hover:text-white group-hover:translate-x-0.5 transition-all">↗</span>
               </a>
             ))}
           </div>
@@ -400,6 +465,27 @@ export default function Footer() {
             </div>
 
             <span className="tracking-wide">19&apos;</span>
+          </div>
+        </div>
+
+        {/* ========================================================
+            LEGAL & COPYRIGHT BOTTOM BAR
+           ======================================================== */}
+        <div className="w-full h-px bg-zinc-800/80 mt-10 sm:mt-14 mb-6 sm:mb-8" />
+        
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500 font-[family-name:var(--font-urbanist)]">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-3 gap-y-1.5 text-center sm:text-left">
+            <span>© 2026 CorAuxis. All rights reserved.</span>
+            <span>•</span>
+            <a href="#" className="hover:text-zinc-300 transition-colors">Terms &amp; Conditions</a>
+            <span>•</span>
+            <a href="#" className="hover:text-zinc-300 transition-colors">Privacy Policy</a>
+            <span>•</span>
+            <a href="#" className="hover:text-zinc-300 transition-colors">Deletion Policy</a>
+          </div>
+
+          <div className="text-zinc-500 font-medium">
+            Built with passion.
           </div>
         </div>
 
